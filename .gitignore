@@ -3,3 +3,5 @@ elm-stuff
 /plugin.js
 /plugin.d.ts
 /example/dist
+/example/generated/**
+!/example/generated/.gitkeep
