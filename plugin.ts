@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import * as T from "travelm_agency";
-import { ResponseContent } from "travelm_agency/lib/elm.min";
+import * as T from "travelm-agency";
+import { ResponseContent } from "travelm-agency/lib/elm.min";
 import { promisify } from "util";
 import { Compiler, sources, WebpackPluginInstance } from "webpack";
 
