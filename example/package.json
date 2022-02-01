@@ -1,0 +1,21 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "Example for travelm-agency-webpack-plugin usage",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve",
+    "build": "webpack build"
+  },
+  "author": "Andreas Molitor",
+  "license": "ISC",
+  "devDependencies": {
+    "elm-webpack-loader": "^8.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.3"
+  },
+  "dependencies": {
+    "intl-proxy": "^1.0.1"
+  }
+}
