@@ -81,14 +81,14 @@ view ({ i18n } as model) =
         [ h1 [] [ text <| Translations.title i18n ]
         , div [] <| List.map (changeLanguageButton i18n) Translations.languages
         , p [] [ text <| Translations.paragraph i18n ]
-        , p [] [ text <| Translations.demo i18n <| toFloat numberOfSixes ]
+        , p [] [ text <| Translations.demo (toFloat numberOfSixes) i18n ]
         ]
     }
 
 
 changeLanguageButton : I18n -> Language -> Html Msg
 changeLanguageButton i18n language =
-    button [ onClick <| ChangeLanguage language ] [ text <| Translations.language i18n <| Translations.languageToString language ]
+    button [ onClick <| ChangeLanguage language ] [ text <| Translations.language (Translations.languageToString language) i18n ]
 
 
 subscriptions : Model -> Sub Msg
