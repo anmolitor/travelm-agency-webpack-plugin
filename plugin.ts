@@ -5,13 +5,34 @@ import { ResponseContent } from "travelm-agency/lib/elm.min";
 import { promisify } from "util";
 import { Compiler, sources, WebpackPluginInstance } from "webpack";
 
+interface Options {
+  translationDir: string;
+  elmPath: string;
+  generatorMode: "inline" | "dynamic";
+  i18nArgFirst: boolean;
+  addContentHash: boolean;
+  jsonPath: string;
+  prefixFileIdentifier: boolean;
+}
+
 class TravelmAgencyPlugin implements WebpackPluginInstance {
   private ranOnce = false;
   private responseContent: ResponseContent | undefined;
+  private options: Options;
 
-  constructor(private readonly options: T.Options) {
+  constructor(options: Partial<Options>) {
     this.runTravelmAgency = this.runTravelmAgency.bind(this);
     this.writeJsonFiles = this.writeJsonFiles.bind(this);
+    this.options = {
+      translationDir: options.translationDir || "translations",
+      elmPath: options.elmPath || "src/Translations.elm",
+      generatorMode: options.generatorMode || "inline",
+      i18nArgFirst: !!options.i18nArgFirst,
+      addContentHash:
+        options.addContentHash === undefined ? true : options.addContentHash,
+      jsonPath: options.jsonPath || "i18n",
+      prefixFileIdentifier: !!options.prefixFileIdentifier,
+    };
   }
 
   apply(compiler: Compiler) {
