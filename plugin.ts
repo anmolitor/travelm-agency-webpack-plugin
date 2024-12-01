@@ -89,8 +89,9 @@ class TravelmAgencyPlugin implements WebpackPluginInstance {
     translationFilePaths: string[],
     devMode: boolean
   ) {
-    await T.sendTranslations(translationFilePaths, devMode);
-    this.responseContent = await T.finishModule({ ...this.options, devMode });
+    const travelmAgency = T.createInstance();
+    await travelmAgency.sendTranslations(translationFilePaths, devMode);
+    this.responseContent = await travelmAgency.finishModule({ ...this.options, devMode });
 
     const shouldBeWritten = await promisify(fs.readFile)(this.options.elmPath, {
       encoding: "utf-8",
