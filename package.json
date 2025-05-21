@@ -1,6 +1,6 @@
 {
   "name": "travelm-agency-webpack-plugin",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Run the travelm agency code generator as part of your webpack build",
   "main": "plugin.js",
   "scripts": {
@@ -15,11 +15,11 @@
   "author": "Andreas Molitor",
   "license": "ISC",
   "dependencies": {
-    "travelm-agency": "^3.5.0"
+    "travelm-agency": "^3.6.0"
   },
   "devDependencies": {
-    "@types/node": "^22.10.1",
+    "@types/node": "^22.15.21",
     "@types/webpack": "^5.28.5",
-    "typescript": "^5.7.2"
+    "typescript": "^5.8.3"
   }
 }
