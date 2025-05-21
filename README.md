@@ -1,4 +1,4 @@
-# Travelm-Agency-Webpack-Plugin !\[NPM\](https://img.shields.io/npm/v/travelm-agency-webpack-plugin)
+# Travelm-Agency-Webpack-Plugin ![NPM](https://img.shields.io/npm/v/travelm-agency-webpack-plugin)
 
 This plugin incorporates the [travelm-agency](https://github.com/andreasewering/travelm-agency) code generator into your webpack build.
 It runs in watch mode whenever your translation files change as well as once in build.
@@ -7,6 +7,5 @@ runs at the very start of the webpack event chain.
 
 ## Usage
 
-Take a look at the [webpack.config.js](example/webpack.config.js) in the example folder. 
-Add the plugin to the plugins section and configure it using the options object. 
-
+Take a look at the [webpack.config.js](example/webpack.config.js) in the example folder.
+Add the plugin to the plugins section and configure it using the options object.
