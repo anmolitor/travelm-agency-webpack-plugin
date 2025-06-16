@@ -13,6 +13,8 @@ interface Options {
   addContentHash: boolean;
   jsonPath: string;
   prefixFileIdentifier: boolean;
+  customHtmlModule: string;
+  customHtmlAttributesModule: string;
 }
 
 class TravelmAgencyPlugin implements WebpackPluginInstance {
@@ -23,6 +25,7 @@ class TravelmAgencyPlugin implements WebpackPluginInstance {
   constructor(options: Partial<Options>) {
     this.runTravelmAgency = this.runTravelmAgency.bind(this);
     this.writeJsonFiles = this.writeJsonFiles.bind(this);
+    const customHtmlModule = options.customHtmlModule ?? "Html";
     this.options = {
       translationDir: options.translationDir || "translations",
       elmPath: options.elmPath || "src/Translations.elm",
@@ -32,6 +35,9 @@ class TravelmAgencyPlugin implements WebpackPluginInstance {
         options.addContentHash === undefined ? true : options.addContentHash,
       jsonPath: options.jsonPath || "i18n",
       prefixFileIdentifier: !!options.prefixFileIdentifier,
+      customHtmlModule,
+      customHtmlAttributesModule:
+        options.customHtmlAttributesModule ?? `${customHtmlModule}.Attributes`,
     };
   }
 
@@ -91,7 +97,10 @@ class TravelmAgencyPlugin implements WebpackPluginInstance {
   ) {
     const travelmAgency = T.createInstance();
     await travelmAgency.sendTranslations(translationFilePaths, devMode);
-    this.responseContent = await travelmAgency.finishModule({ ...this.options, devMode });
+    this.responseContent = await travelmAgency.finishModule({
+      ...this.options,
+      devMode,
+    });
 
     const shouldBeWritten = await promisify(fs.readFile)(this.options.elmPath, {
       encoding: "utf-8",

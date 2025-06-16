@@ -19,7 +19,6 @@ type Msg
 
 type alias Model =
     { i18n : I18n
-    , language : Language
     , diceRolls : List Int
     }
 
@@ -29,10 +28,13 @@ init { intl, language } =
     let
         lang =
             Translations.languageFromString language |> Maybe.withDefault Translations.En
+
+        i18n =
+            Translations.init { intl = intl, lang = lang, path = "/translations" }
     in
-    ( { i18n = Translations.init intl lang, language = lang, diceRolls = [] }
+    ( { i18n = i18n, diceRolls = [] }
     , Cmd.batch
-        [ Translations.loadMessages { language = lang, path = "/translations", onLoad = GotTranslations }
+        [ Translations.loadMessages GotTranslations i18n
         , Random.generate GotNextRandom <| rollN 6
         ]
     )
@@ -54,7 +56,11 @@ update msg model =
             ( { model | diceRolls = diceRolls }, Cmd.none )
 
         ChangeLanguage language ->
-            ( { model | language = language }, Translations.loadMessages { language = language, path = "/translations", onLoad = GotTranslations } )
+            let
+                ( i18n, cmds ) =
+                    Translations.switchLanguage language GotTranslations model.i18n
+            in
+            ( { model | i18n = i18n }, cmds )
 
 
 roll : Random.Generator Int
@@ -71,7 +77,7 @@ view : Model -> Document Msg
 view ({ i18n } as model) =
     let
         currentLangString =
-            Translations.languageToString model.language
+            Translations.languageToString <| Translations.currentLanguage model.i18n
 
         numberOfSixes =
             model.diceRolls |> List.filter ((==) 6) |> List.length
